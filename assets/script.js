@@ -1,7 +1,15 @@
+/*---------------------------------------------------------------------------
+Function: logOut()
+Purpose: Logs out user by sending logged in session_id to server.
+Input:none
+Output: response: success message.
+-----------------------------------------------------------------------------*/    
+
+
     function logOut(){
         $.ajax({
                 url: 'http://s-apis.learningfuze.com/todo/logout',
-                data: {username:user.username},
+                data: {session_id:user.session_id},
                 method:'Post',
                 success: function(response){
                     console.log('in logout: ', response);
@@ -9,6 +17,12 @@
         })
     }
     
+/*---------------------------------------------------------------------------
+Function: validateUser()
+Purpose: sends login information to server to log in user
+Input: username and password
+Output: success or failure message, on success: appends user information to the top of the page
+-----------------------------------------------------------------------------*/    
 
      function validateUser(){
         $.ajax({
@@ -44,7 +58,12 @@
 
     }
 
-
+/*---------------------------------------------------------------------------
+Function: getServerList()
+Purpose: task information from the server. task information is an array of objects.
+Input: none 
+Output: response, an array of task objects
+-----------------------------------------------------------------------------*/  
     function getServerList() {
         console.log('in getServerList');
         $.ajax({
@@ -74,7 +93,12 @@
 
         })
     }
-
+/*---------------------------------------------------------------------------
+Function: deleteTask()
+Purpose: Deletes a task out of the object array, and removes its dom element.
+Input: none
+Output: none
+-----------------------------------------------------------------------------*/  
     function deleteTask() {
         console.log('in deleteTask')
         $('.task_list_container').on('click', '.delete_task', function() {
@@ -88,6 +112,12 @@
             delete todo_objects[current_index];
         })
     }
+/*---------------------------------------------------------------------------
+Function: taskComplete()
+Purpose: create an onlick handler that moves the task element to a new dom structure with the class .task_completed_container 
+Input: none
+Output: none
+-----------------------------------------------------------------------------*/  
 
     function taskComplete() {
         $('.task_list_container').on('click', '.completed_task', function() {
@@ -103,14 +133,24 @@
 
         })
     }
-
+/*---------------------------------------------------------------------------
+Function: showCompleted()
+Purpose: Creates an onclick handler on .task_completed_container that toggles a class to hide the list. 
+Input: None
+Output: None
+-----------------------------------------------------------------------------*/  
     function showCompleted() {
         console.log('in showCompleted');
         $('.task_completed_container').click(function() {
             $('.task_list').toggleClass('shown_task_details');
         })
     }
-
+/*---------------------------------------------------------------------------
+Function: generateList()
+Purpose: Iterates through task object array and creates dynamically creates dom elements to list the objects in the array
+Input: todo_obj_arr, array of task objects that is retrieved from the server
+Output: Dom elements
+-----------------------------------------------------------------------------*/  
     function generateList(todo_object_arr) {
 
         console.log('in generateList')
@@ -187,7 +227,12 @@
         }
     }
 
-
+/*---------------------------------------------------------------------------
+Function: createTask()
+Purpose: Creates new task object and pushes it to the task object array. Also creates and appends dom elements according to that task.
+Input: None
+Output: New dom elements and new object in the object array.
+-----------------------------------------------------------------------------*/  
     function createTask() {
         var new_task = Object.create({});
         new_task.title = $('#new_title').val();
@@ -267,7 +312,12 @@
 
 
     }
-
+/*---------------------------------------------------------------------------
+Function: timeStamp()
+Purpose: Creates new timeStamp to apply to the new task object. 
+Input:none
+Output: timeStamp to add to the object.
+-----------------------------------------------------------------------------*/  
     function timeStamp() {
         // Create a date object with the current time
         var now = new Date();
@@ -296,6 +346,14 @@
         // Return the formatted string
         return date.join("/") + " " + time.join(":");
     }
+
+/*---------------------------------------------------------------------------
+Function: document.ready
+Purpose: On load creates the list of objects from the server. And creates the click handlers via getServerList(), taskComplete(), deleteTask(), and showCompleted()
+also applies validateUser() the submit button click.
+Input: none
+Output: none  
+-----------------------------------------------------------------------------*/  
 
     $(document).ready(function() {
         getServerList();
