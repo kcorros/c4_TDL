@@ -14,8 +14,8 @@
         $.ajax({
                 url: 'http://s-apis.learningfuze.com/todo/login',
                 dataType:'json',
-                data:{username:'elanning', password:'test'},
-                method: 'Post',
+                data:{username:$('#username').val(), password:$('#password').val()},
+                method: 'POST',
 
                 success: function(response){
                     window.user=response;
@@ -303,6 +303,9 @@
         deleteTask();
         showCompleted();
 
+        $('.submit_button').click(function(){
+            validateUser();
+        })
 
 
     });
