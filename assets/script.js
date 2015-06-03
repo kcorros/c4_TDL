@@ -68,7 +68,7 @@ Output: response, an array of task objects
         console.log('in getServerList');
         $.ajax({
 
-            url: '../assets/get_todo_items.js',
+            url: 'assets/get_todo_items.js',
             dataType: 'json',
             crossDomain: true,
             cache: false,
@@ -361,9 +361,11 @@ Output: none
         deleteTask();
         showCompleted();
 
-        $('.submit_button').click(function(){
+        $('.login_submit_button').click(function(){
             validateUser();
         })
-
+        $('.create_task_button').click(function(){
+            createTask();
+        });
 
     });
