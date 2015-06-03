@@ -234,7 +234,17 @@ Input: None
 Output: New dom elements and new object in the object array.
 -----------------------------------------------------------------------------*/  
     function createTask() {
-        
+        $.ajax({
+                url: 'http://s-apis.learningfuze.com/todo/create',
+                dataType: 'json',
+                method: 'Post',
+                data: {
+                        title: new_title.val(),
+                        dueDate: timeStamp(),
+                        details: new_details.val(),
+                        userId: user.id,
+                    }
+        })
 
         var new_task = Object.create({});
         new_task.title = $('#new_title').val();
@@ -326,7 +336,7 @@ Output: timeStamp to add to the object.
         var now = new Date();
 
         // Create an array with the current month, day and time
-        var date = [now.getMonth() + 1, now.getDate(), now.getFullYear()];
+        var date = [now.getDate(), now.getMonth(), now.getFullYear()];
 
         // Create an array with the current hour, minute and second
         var time = [now.getHours(), now.getMinutes(), now.getSeconds()];
@@ -347,7 +357,7 @@ Output: timeStamp to add to the object.
         }
 
         // Return the formatted string
-        return date.join("/") + " " + time.join(":");
+        return date.join("-");
     }
 
 
