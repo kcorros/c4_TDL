@@ -1,3 +1,15 @@
+    function logOut(){
+        $.ajax({
+                url: 'http://s-apis.learningfuze.com/todo/logout',
+                data: {username:user.username},
+                method:'Post',
+                success: function(response){
+                    console.log('in logout: ', response);
+                }
+        })
+    }
+    
+
      function validateUser(){
         $.ajax({
                 url: 'http://s-apis.learningfuze.com/todo/login',
@@ -6,6 +18,7 @@
                 method: 'Post',
 
                 success: function(response){
+                    window.user=response;
                     if(response.success == false){
                         console.log('in failure');
                         console.log('errors: ',response.errors);
@@ -14,14 +27,14 @@
                                         text: response.firstName + ' ' + response.lastName,
                                         id: 'user_logged_in',
                                         class:'col-xs-12'
-                    })
+                     })
                     var email_span = $('<span>',{
                                         text: response.email,
                                         id: 'email_logged_in',
                                         class:'col-xs-12',
-                    })
+                     })
 
-                    $('.user_info').append(name_span, email_span);
+                     $('.user_info').append(name_span, email_span);
 
                     console.log('response: ',response);
                 }
