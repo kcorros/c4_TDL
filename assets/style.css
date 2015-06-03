@@ -14,3 +14,20 @@
 	margin-top: 10vh;
 }
 
+
+.add-button{
+	font-size: 30px;
+	border-style: none;
+}
+.todo-label{
+	text-align: right;
+}
+html{
+	width: 500px;
+	height: 500px;
+}
+body{
+	width: 500px;
+	height: 500px;
+}
+
