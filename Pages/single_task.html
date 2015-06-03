@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<title>To Do List</title>
+	<script>
+			var todo_items= [
+		    {
+		      id: 0,
+		      user_id: 1,
+		      timeStamp: '2015/06/15 12:00:00',
+		      title: 'my title',
+		      details: 'my details'
+		    }
+		]
+	</script>
+
+</head>
+<body>
+	<div class='col-xs-12 container task_container'>
+	<header class='col-xs-12'>
+		<h1 class='col-xs-3 col-xs-offset-5'>Task</h1>
+		<div class='col-xs-2 due_date'>Due Date</div>
+	</header>
+	<div class='task_body col-xs-12'>
+		<div class='task_details col-xs-8'>
+			Content from detail input.
+	</div>
+		<div class='task_options col-xs-3 col-xs-offset-1'>
+			<button type ='button' class='col-xs-12' id='edit_task'>Edit</button>
+			<button type='button' class='col-xs-12' id='delete_task'>Delete</button>
+			<button type='button' class='col-xs-12' id='completed_task'>Task Completed</button>
+		</div>
+
+		</div>
+		<div class='col-xs-12 prev_and_next'>
+			<button type='button' class='col-xs-3' id='prev'>Previous Task</button>
+			<button type='button' class='col-xs-3 col-xs-offset-6' id='next'>Next Task</button>
+	</div>
+</body>
+</html>
