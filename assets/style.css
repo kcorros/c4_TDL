@@ -31,3 +31,6 @@ body{
 	height: 500px;
 }
 
+.clicked_btn{
+	display:none;
+}
