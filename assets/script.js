@@ -234,6 +234,8 @@ Input: None
 Output: New dom elements and new object in the object array.
 -----------------------------------------------------------------------------*/  
     function createTask() {
+        
+
         var new_task = Object.create({});
         new_task.title = $('#new_title').val();
         new_task.details = $('#new_details').val();
@@ -310,7 +312,8 @@ Output: New dom elements and new object in the object array.
             task_list_entry.append(details_div);
             $('.task_list_container').append(task_list_entry);
 
-
+            $('#new_title').val(null);
+            $('#new_details').val(null);
     }
 /*---------------------------------------------------------------------------
 Function: timeStamp()
