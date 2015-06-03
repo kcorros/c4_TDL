@@ -31,7 +31,12 @@ body{
 	height: 500px;
 }
 
+
 .top_navbar {
 	
+}
+
+.clicked_btn{
+	display:none;
 }
 

@@ -234,6 +234,8 @@ Input: None
 Output: New dom elements and new object in the object array.
 -----------------------------------------------------------------------------*/  
     function createTask() {
+        
+
         var new_task = Object.create({});
         new_task.title = $('#new_title').val();
         new_task.details = $('#new_details').val();
@@ -310,7 +312,8 @@ Output: New dom elements and new object in the object array.
             task_list_entry.append(details_div);
             $('.task_list_container').append(task_list_entry);
 
-
+            $('#new_title').val(null);
+            $('#new_details').val(null);
     }
 /*---------------------------------------------------------------------------
 Function: timeStamp()
@@ -347,6 +350,23 @@ Output: timeStamp to add to the object.
         return date.join("/") + " " + time.join(":");
     }
 
+
+/*---------------------------------------------------------------------------
+Function: 
+Purpose: 
+Input: 
+Output: 
+-----------------------------------------------------------------------------*/  
+function toggleButtons(){
+    $('.login_logout_container').click(function(){
+        console.log('in login_logout click handler')
+        $('.login_logout_btn').toggleClass('clicked_btn')
+    })
+
+}
+
+
+
 /*---------------------------------------------------------------------------
 Function: document.ready
 Purpose: On load creates the list of objects from the server. And creates the click handlers via getServerList(), taskComplete(), deleteTask(), and showCompleted()
@@ -360,6 +380,7 @@ Output: none
         taskComplete();
         deleteTask();
         showCompleted();
+        toggleButtons();
 
         $('.login_submit_button').click(function(){
             validateUser();
