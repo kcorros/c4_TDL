@@ -76,7 +76,7 @@ Output: response, an array of task objects
 
             url: 'http://s-apis.learningfuze.com/todo/get',
             dataType: 'json',
-            data:{user:user.id},
+            data:{userId:user.id},
             crossDomain: true,
             cache: false,
             method: 'Post',
