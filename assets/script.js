@@ -162,7 +162,7 @@ Output: Dom elements
     function generateList(todo_object_arr) {
 
         console.log('in generateList')
-        for (var i = 0; i < todo_object_arr.length; i++) {
+        for (var i = 0; i < todo_object_arr.data.length; i++) {
             console.log('in for loop');
             var task_list_entry = $('<div>', {
                 class: 'task_list col-xs-12',
