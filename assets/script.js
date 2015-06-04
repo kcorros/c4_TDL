@@ -19,6 +19,7 @@ Return: return message.
 
                 }
         })
+        $('.task_list').remove();
     }
     
 /*---------------------------------------------------------------------------
@@ -337,6 +338,61 @@ function toggleButtons(){
 }
 
 
+/*---------------------------------------------------------------------------
+Function: 
+Purpose: 
+Input: 
+Output: 
+-----------------------------------------------------------------------------*/  
+function applyPastDue(){
+    console.log('in past due');
+    for(var i=0; i<todo_objects.data.length; i++){
+        console.log('todo_objects.data: ', todo_objects.data);
+        if(todo_objects.data[i].timeStamp > timeStamp()){
+            todo_objects.data[i].pastDue=true;
+        } else if(todo_objects.data[i].timeStamp < timeStamp()){
+            todo_objects.data[i].pastDue=false;
+        }
+    }
+}
+
+/*---------------------------------------------------------------------------
+Function: 
+Purpose: 
+Input: 
+Output: 
+-----------------------------------------------------------------------------*/  
+function sortByPastDue(){
+    console.log('sortAndMarkByPastDue');
+    for(var i=1; i<todo_objects.data.length; i++){
+        if(todo_objects.data[i].pastDue < todo_objects.data[i-1].pastDue){
+            var more = todo_objects.data[i-1];
+            todo_objects.data[i-1] = todo_objects.data[i];
+            todo_objects.data[i] = more;
+            
+            
+            i=0;
+        }
+    }
+    console.log(todo_objects);
+    $('.task_list').remove();
+    generateList(todo_objects);
+}
+
+
+function markByPastDue(){
+    console.log('in markByPastDue')
+    for(var i=0; i<todo_objects.data.length; i++){
+        if(todo_objects.data[i].pastDue){
+            var target_div = '#task'+ todo_objects.data[i].id;
+            console.log('target_div: ',target_div);
+            $(target_div).removeClass('col-xs-12').addClass('col-xs-10 col-xs-offset-2');
+            console.log($(target_div));
+        }
+    }
+}
+
+
 
 /*---------------------------------------------------------------------------
 Function: document.ready
@@ -366,6 +422,3 @@ Output: none
 
 
 
-    function whatIsUser(){
-        console.log('user: ', user);
-    }
