@@ -1,13 +1,15 @@
 var username;
+
 /*---------------------------------------------------------------------------
 Function: logOut()
 Purpose: Logs out user by sending logged in session_id to server.
 Input:none
-Output: response: success message.
+Return: return message.
 -----------------------------------------------------------------------------*/    
 
 
     function logOut(){
+        console.log('in logout function');
         $.ajax({
                 url: 'http://s-apis.learningfuze.com/todo/logout',
                 data: {username: username, sid:user.session_id},
@@ -27,6 +29,7 @@ Output: success or failure message, on success: appends user information to the 
 -----------------------------------------------------------------------------*/    
 
      function validateUser(){
+        console.log('in validateUser function');
         username=$('#username').val();
         $.ajax({
                 url: 'http://s-apis.learningfuze.com/todo/login',
@@ -57,6 +60,7 @@ Output: success or failure message, on success: appends user information to the 
                     $('#logout_btn').click(function(){
                         logOut();
                         $('.user_info').remove()
+                    getServerList();
                     })
                 }
             
@@ -71,7 +75,42 @@ Purpose: task information from the server. task information is an array of objec
 Input: none 
 Output: response, an array of task objects
 -----------------------------------------------------------------------------*/  
+
     
+
+    function getServerList() {
+        console.log('in getServerList function');
+        console.log('userid: ', user.id)
+        $.ajax({
+
+            url: 'http://s-apis.learningfuze.com/todo/get',
+            dataType: 'json',
+            data:{userId:user.id},
+            crossDomain: true,
+            cache: false,
+            method: 'Post',
+            success: function(response) {
+
+                console.log('response: ', response);
+                window.todo_objects = response;
+                generateList(todo_objects);
+                $('.task_list_container').on('click', '.task_entry', function() {
+                    console.log('in reveal task handler')
+                    console.log('this: ' + $(this));
+
+                    var current_index = $(this).attr('index_id');
+                    var target_id = '#task_details' + current_index;
+
+                    console.log('this: ' + $(this).attr('index_id'));
+                    $(target_id).toggleClass('shown_task_details');
+                    console.log("UserId =", user.id);
+                })
+
+            } 
+
+        })
+    }
+
 /*---------------------------------------------------------------------------
 Function: deleteTask()
 Purpose: Deletes a task out of the object array, and removes its dom element.
@@ -79,6 +118,7 @@ Input: none
 Output: none
 -----------------------------------------------------------------------------*/  
     function deleteTask() {
+
         console.log('in deleteTask')
         $('.task_list_container').on('click', '.delete_task', function() {
             console.log('id of this: ', $(this));
@@ -99,6 +139,7 @@ Output: none
 -----------------------------------------------------------------------------*/  
 
     function taskComplete() {
+        console.log('in taskComplete function');
         $('.task_list_container').on('click', '.completed_task', function() {
             console.log('id of this: ', $(this));
 
@@ -132,17 +173,20 @@ Output: Dom elements
 -----------------------------------------------------------------------------*/  
     function generateList(todo_object_arr) {
 
-        console.log('in generateList')
-        for (var i = 0; i < todo_object_arr.length; i++) {
+        console.log('in generateList');
+        console.log('todo_object_arr: ', todo_object_arr);
+        console.log('todo_object_arr.length: ', todo_object_arr.length)
+        for (var i=0; i < todo_object_arr.data.length; i++) {
+            console.log('in for loop: ', i);
             console.log('in for loop');
             var task_list_entry = $('<div>', {
                 class: 'task_list col-xs-12',
-                id: 'task' + todo_object_arr[i].id,
+                id: 'task' + todo_object_arr.data[i].id,
             });
             var task_title = $('<li>', {
-                text: todo_object_arr[i].title,
+                text: todo_object_arr.data[i].title,
                 class: 'task_entry col-xs-6',
-                index_id: todo_object_arr[i].id,
+                index_id: todo_object_arr.data[i].id,
 
             });
             var edit_button = $('<button>', {
@@ -155,35 +199,35 @@ Output: Dom elements
                 text: 'Delete',
                 type: 'button',
                 class: 'col-xs-1 col-sm-offset-1 delete_task',
-                id: 'delete' + todo_object_arr[i].id,
-                index_id: todo_object_arr[i].id,
+                id: 'delete' + todo_object_arr.data[i].id,
+                index_id: todo_object_arr.data[i].id,
 
             });
             var task_complete = $('<button>', {
                 text: 'Completed',
                 type: 'button',
                 class: 'col-xs-1 col-sm-offset-1 completed_task',
-                id: 'complete' + todo_object_arr[i].id,
-                index_id: todo_object_arr[i].id,
+                id: 'complete' + todo_object_arr.data[i].id,
+                index_id: todo_object_arr.data[i].id,
 
             });
 
 
             var details_div = $('<div>', {
-                id: 'task_details' + todo_object_arr[i].id,
+                id: 'task_details' + todo_object_arr.data[i].id,
                 class: 'task_details col-xs-12',
 
             });
 
             var details_span = $('<span>', {
-                text: todo_object_arr[i].details,
+                text: todo_object_arr.data[i].details,
                 class: 'col-xs-6',
                 contenteditable: 'true',
 
             });
 
             var initial_time = $('<span>', {
-                text: 'Made: ' + todo_object_arr[i].timeStamp,
+                text: 'Made: ' + todo_object_arr.data[i].timeStamp,
                 class: 'col-xs-2 col-xs-offset-1',
                 contenteditable: 'true',
             });
@@ -213,6 +257,7 @@ Input: None
 Output: New dom elements and new object in the object array.
 -----------------------------------------------------------------------------*/  
     function createTask() {
+        console.log('in createTask function');
         $.ajax({
                 url: 'http://s-apis.learningfuze.com/todo/create',
                 dataType: 'json',
@@ -229,7 +274,10 @@ Output: New dom elements and new object in the object array.
                         getServerList();
 
                     }
+
         })
+
+
 
        
 
@@ -247,8 +295,10 @@ Output: timeStamp to add to the object.
         var now = new Date();
 
         // Create an array with the current month, day and time
-        var date = [now.getDate(), now.getMonth()+1, now.getFullYear()];
-        var date = date.reverse();
+
+
+        var date = [now.getFullYear(), now.getMonth()+1, now.getDate()];
+
         // Create an array with the current hour, minute and second
         var time = [now.getHours(), now.getMinutes()+1, now.getSeconds()];
 
@@ -297,7 +347,7 @@ Output: none
 -----------------------------------------------------------------------------*/  
 
     $(document).ready(function() {
-        getServerList();
+        
         taskComplete();
         deleteTask();
         showCompleted();
@@ -311,3 +361,11 @@ Output: none
         });
 
     });
+    
+
+
+
+
+    function whatIsUser(){
+        console.log('user: ', user);
+    }
