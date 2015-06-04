@@ -361,11 +361,3 @@ Output: none
         });
 
     });
-    
-
-
-
-
-    function whatIsUser(){
-        console.log('user: ', user);
-    }
