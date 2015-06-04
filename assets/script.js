@@ -1,8 +1,9 @@
+var user ={};
 /*---------------------------------------------------------------------------
 Function: logOut()
 Purpose: Logs out user by sending logged in session_id to server.
 Input:none
-Output: response: success message.
+Return: return message.
 -----------------------------------------------------------------------------*/    
 
 
@@ -32,7 +33,7 @@ Output: success or failure message, on success: appends user information to the 
                 method: 'POST',
 
                 success: function(response){
-                    window.user=response;
+                    user=response;
                     if(response.success == false){
                         console.log('in failure');
                         console.log('errors: ',response.errors);
@@ -68,10 +69,12 @@ Output: response, an array of task objects
         console.log('in getServerList');
         $.ajax({
 
-            url: 'assets/get_todo_items.js',
+            url: 'http://s-apis.learningfuze.com/todo/get',
             dataType: 'json',
+            data:{user:user.id},
             crossDomain: true,
             cache: false,
+            method: 'Post',
             success: function(response) {
 
                 console.log('response: ' + response);
@@ -86,10 +89,10 @@ Output: response, an array of task objects
 
                     console.log('this: ' + $(this).attr('index_id'));
                     $(target_id).toggleClass('shown_task_details');
-
+                    console.log("UserId =", user.id);
                 })
 
-            }
+            } 
 
         })
     }
