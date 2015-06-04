@@ -60,7 +60,7 @@ body{
 	background-color:#D4EE5E;
 }
 
-.login_form_button
+.login_form_button .logout_form_button
 {
 	background-color:#FF4242;
 }
