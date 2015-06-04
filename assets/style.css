@@ -49,6 +49,14 @@ body{
 
 .add_task_button
 {
+	background-color:#FF4242;
+	width:75px;
+}
+
+.add_task_button
+{
+	float:left;
+	position:relative;
 	background-color:#D4EE5E;
 }
 
@@ -56,8 +64,22 @@ body{
 {
 	background-color:#FF4242;
 }
+
+.login_logout_button
+{
+	background-color:#FF4242;
+}
+
 h2
 {
 	font-family:Impact, Charcoal, sans-serif;
 	font-weight:200;
 }
+
+
+.navbar-default div.navbar-collapse
+{
+    border-top:none;
+    box-shadow:none;
+}
+

@@ -173,41 +173,41 @@ Output: Dom elements
 -----------------------------------------------------------------------------*/  
     function generateList(todo_object_arr) {
 
+
         console.log('in generateList');
         console.log('todo_object_arr: ', todo_object_arr);
         console.log('todo_object_arr.length: ', todo_object_arr.data.length)
         for (var i=0; i < todo_object_arr.data.length; i++) {
             console.log('in for loop: ', i);
-
-            console.log('in for loop');
+             console.log('in for loop');
             var task_list_entry = $('<div>', {
                 class: 'task_list col-xs-12',
                 id: 'task' + todo_object_arr.data[i].id,
             });
             var task_title = $('<li>', {
                 text: todo_object_arr.data[i].title,
-                class: 'task_entry col-xs-6',
+                class: 'task_entry col-xs-6 list-unstyled',
                 index_id: todo_object_arr.data[i].id,
 
             });
             var edit_button = $('<button>', {
-                text: 'Edit',
+                text: '',
                 type: 'button',
-                class: 'col-xs-1 col-sm-offset-1 edit_task',
+                class: 'col-xs-1 col-sm-offset-1 edit_task glyphicon glyphicon-th-list',
 
             });
             var delete_button = $('<button>', {
-                text: 'Delete',
+                text: '',
                 type: 'button',
-                class: 'col-xs-1 col-sm-offset-1 delete_task',
+                class: 'col-xs-1 col-sm-offset-1 delete_task glyphicon glyphicon-trash',
                 id: 'delete' + todo_object_arr.data[i].id,
                 index_id: todo_object_arr.data[i].id,
 
             });
             var task_complete = $('<button>', {
-                text: 'Completed',
+                text: '',
                 type: 'button',
-                class: 'col-xs-1 col-sm-offset-1 completed_task',
+                class: 'col-xs-1 col-sm-offset-1 completed_task glyphicon glyphicon-ok',
                 id: 'complete' + todo_object_arr.data[i].id,
                 index_id: todo_object_arr.data[i].id,
 
