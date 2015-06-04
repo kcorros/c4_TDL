@@ -29,9 +29,11 @@ html{
 body{
 	width: 500px;
 	height: 500px;
+	background-color:#F0F2EB;
 }
 
 .top_navbar {
+	background-color:#F0F2EB;
 	
 }
 
@@ -42,6 +44,31 @@ body{
 .brownline
 {
 	height:24px;
+<<<<<<< HEAD
 	background-color:#754b23;
 }
 
+=======
+	background-color:#FF4242;
+}
+
+.add_task_button
+{
+	background-color:#D4EE5E;
+}
+
+.login_form_button
+{
+	background-color:#FF4242;
+}
+h2
+{
+	font-family:Impact, Charcoal, sans-serif;
+	font-weight:200;
+}
+
+#FF4242
+#D4EE5E
+#E1EDB9
+#F0F2EB
+>>>>>>> 873e423ca87eacfc7f771ae9254bd3a5c71f34da
