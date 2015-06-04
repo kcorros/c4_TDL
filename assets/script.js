@@ -16,9 +16,10 @@ Return: return message.
                 method:'Post',
                 success: function(response){
                     console.log('in logout: ', response);
-
+                    $('.task_list').remove();
                 }
         })
+        
     }
     
 /*---------------------------------------------------------------------------
@@ -53,19 +54,21 @@ Output: success or failure message, on success: appends user information to the 
                                         id: 'email_logged_in',
                                         class:'col-xs-12',
                      })
-
+                    $('.user_info').empty();
                      $('.user_info').append(name_span, email_span);
-
+                     getServerList();   
                     console.log('response: ',response);
                     $('#logout_btn').click(function(){
+                        console.log('in logout btn click handler');
                         logOut();
                         $('.user_info').remove()
-                    getServerList();
-                    })
-                }
-            
 
-        })
+                    });
+                    getServerList();
+                    generateList();
+                }
+
+        });
 
     }
 
@@ -93,6 +96,9 @@ Output: response, an array of task objects
 
                 console.log('response: ', response);
                 window.todo_objects = response;
+                applyPastDue();
+                sortByPastDue();
+                markByPastDue();
                 generateList(todo_objects);
                 $('.task_list_container').on('click', '.task_entry', function() {
                     console.log('in reveal task handler')
@@ -104,11 +110,12 @@ Output: response, an array of task objects
                     console.log('this: ' + $(this).attr('index_id'));
                     $(target_id).toggleClass('shown_task_details');
                     console.log("UserId =", user.id);
-                })
+                });
 
             } 
 
-        })
+
+        });
     }
 
 /*---------------------------------------------------------------------------
@@ -278,10 +285,6 @@ Output: New dom elements and new object in the object array.
 
         })
 
-
-
-       
-
             $('#new_title').val(null);
             $('#new_details').val(null);
     }
@@ -338,6 +341,61 @@ function toggleButtons(){
 }
 
 
+/*---------------------------------------------------------------------------
+Function: 
+Purpose: 
+Input: 
+Output: 
+-----------------------------------------------------------------------------*/  
+function applyPastDue(){
+    console.log('in past due');
+    for(var i=0; i<todo_objects.data.length; i++){
+        console.log('todo_objects.data: ', todo_objects.data);
+        if(todo_objects.data[i].timeStamp > timeStamp()){
+            todo_objects.data[i].pastDue=true;
+        } else if(todo_objects.data[i].timeStamp < timeStamp()){
+            todo_objects.data[i].pastDue=false;
+        }
+    }
+}
+
+/*---------------------------------------------------------------------------
+Function: 
+Purpose: 
+Input: 
+Output: 
+-----------------------------------------------------------------------------*/  
+function sortByPastDue(){
+    console.log('sortAndMarkByPastDue');
+    for(var i=1; i<todo_objects.data.length; i++){
+        if(todo_objects.data[i].pastDue < todo_objects.data[i-1].pastDue){
+            var more = todo_objects.data[i-1];
+            todo_objects.data[i-1] = todo_objects.data[i];
+            todo_objects.data[i] = more;
+            
+            
+            i=0;
+        }
+    }
+    console.log(todo_objects);
+    $('.task_list').remove();
+    generateList(todo_objects);
+}
+
+
+function markByPastDue(){
+    console.log('in markByPastDue')
+    for(var i=0; i<todo_objects.data.length; i++){
+        if(todo_objects.data[i].pastDue){
+            var target_div = '#task'+ todo_objects.data[i].id;
+            console.log('target_div: ',target_div);
+            $(target_div).removeClass('col-xs-12').addClass('col-xs-10 col-xs-offset-2');
+            console.log($(target_div));
+        }
+    }
+}
+
+
 
 /*---------------------------------------------------------------------------
 Function: document.ready
@@ -355,6 +413,7 @@ Output: none
         toggleButtons();
 
         $('.login_submit_button').click(function(){
+            console.log('in login submit handler');
             validateUser();
         })
         $('.create_task_button').click(function(){
@@ -362,3 +421,4 @@ Output: none
         });
 
     });
+
