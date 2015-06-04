@@ -53,19 +53,20 @@ Output: success or failure message, on success: appends user information to the 
                                         id: 'email_logged_in',
                                         class:'col-xs-12',
                      })
-
+                    $('.user_info').empty();
                      $('.user_info').append(name_span, email_span);
 
                     console.log('response: ',response);
                     $('#logout_btn').click(function(){
                         logOut();
                         $('.user_info').remove()
+                    });
                     getServerList();
-                    })
+                    generateList();
                 }
             
 
-        })
+        });
 
     }
 
@@ -104,11 +105,12 @@ Output: response, an array of task objects
                     console.log('this: ' + $(this).attr('index_id'));
                     $(target_id).toggleClass('shown_task_details');
                     console.log("UserId =", user.id);
-                })
+                });
 
             } 
 
-        })
+
+        });
     }
 
 /*---------------------------------------------------------------------------
@@ -277,10 +279,6 @@ Output: New dom elements and new object in the object array.
                     }
 
         })
-
-
-
-       
 
             $('#new_title').val(null);
             $('#new_details').val(null);
